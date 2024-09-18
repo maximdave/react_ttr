@@ -4,3 +4,11 @@ export interface Character {
   mass: string;
   url: string;
 }
+
+export interface RootState {
+  characters: {
+    characters: Character[];
+    loading: boolean;
+    error: string | null;
+  };
+}

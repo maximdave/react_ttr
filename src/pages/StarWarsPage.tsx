@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import StarWarsList from '../components/StarWarsList';
-import { fetchStarWarsCharacters } from '../services/api';
-import { Character } from '../types';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import StarWarsList from "../components/StarWarsList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCharactersStart,
+  fetchCharactersSuccess,
+  fetchCharactersFailure,
+} from "../store/characterSlice";
+import { fetchStarWarsCharacters } from "../services/api";
+import { RootState } from "../types"; // Ensure you have a RootState type defined
 
 const StarWarsPage: React.FC = () => {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const { characters, loading, error } = useSelector(
+    (state: RootState) => state.characters
+  );
 
   useEffect(() => {
-    fetchStarWarsCharacters()
-      .then(data => {
-        setCharacters(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        setError('Failed to fetch characters');
-        setIsLoading(false);
-      });
-  }, []);
+    const fetchCharacters = async () => {
+      dispatch(fetchCharactersStart());
+      try {
+        const data = await fetchStarWarsCharacters();
+        dispatch(fetchCharactersSuccess(data));
+      } catch (err) {
+        dispatch(fetchCharactersFailure("Failed to fetch characters"));
+      }
+    };
 
-  if (isLoading) return <div className="text-center mt-8">Loading...</div>;
-  if (error) return <div className="text-center mt-8 text-red-500">{error}</div>;
+    fetchCharacters();
+  }, [dispatch]);
+
+  if (loading) return <div className="text-center mt-8">Loading...</div>;
+  if (error)
+    return <div className="text-center mt-8 text-red-500">{error}</div>;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">

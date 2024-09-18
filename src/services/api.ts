@@ -1,7 +1,7 @@
 import { Character } from '../types';
 
 export const fetchStarWarsCharacters = async (): Promise<Character[]> => {
-  const response = await fetch('https://swapi.dev/api/people/');
+  const response = await fetch('https://swapi.dev/api/peoples/');
   if (!response.ok) {
     throw new Error('Failed to fetch characters');
   }
