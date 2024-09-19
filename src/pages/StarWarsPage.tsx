@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import StarWarsList from "../components/StarWarsList";
+import AddCharacterForm from "../components/AddCharacterForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCharactersStart,
@@ -40,6 +41,7 @@ const StarWarsPage: React.FC = () => {
         &larr; Back to Home
       </Link>
       <h1 className="text-3xl font-bold mb-6">Star Wars Characters</h1>
+      <AddCharacterForm />
       <StarWarsList characters={characters} />
     </div>
   );

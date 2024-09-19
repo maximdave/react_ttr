@@ -29,6 +29,9 @@ const characterSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    addCharacter(state, action: PayloadAction<Character>) {
+      state.characters.push(action.payload);
+    },
   },
 });
 
@@ -36,6 +39,7 @@ export const {
   fetchCharactersStart,
   fetchCharactersSuccess,
   fetchCharactersFailure,
+  addCharacter,
 } = characterSlice.actions;
 
 export default characterSlice.reducer;

@@ -20,6 +20,12 @@ const LandingPage: React.FC = () => {
             >
               Star Wars Characters
             </Link>
+            <Link
+              to="/wenaija"
+              className="bg-yellow-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+            >
+              WeNaija
+            </Link>
           </div>
         </nav>
       </header>
